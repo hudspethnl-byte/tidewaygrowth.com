@@ -1,0 +1,367 @@
+/* Tideway Growth v2. Tokens and rules: DESIGN.md */
+
+:root {
+  --paper: #E4E8E0;
+  --ink: #141B16;
+  --ink-2: #4A554D;
+  --rule: #B3BCB1;
+  --band: #17201A;
+  --band-ink: #E4E8E0;
+  --band-ink-2: #A7B2A8;
+  --accent: #B8341A;
+  --accent-on-band: #E8664A;
+  --paper-2: #D6DCD2;
+  --band-rule: #34413A;
+
+  --display: "Libre Franklin", "Franklin Gothic Medium", "Helvetica Neue", Arial, sans-serif;
+  --text: "Newsreader", Georgia, "Times New Roman", serif;
+
+  --gutter: clamp(20px, 5vw, 120px);
+  --content: 1200px;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; }
+@media (prefers-reduced-motion: no-preference) { html { scroll-behavior: smooth; } }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: clamp(1.125rem, 0.95rem + 0.4vw, 1.25rem);
+  line-height: 1.5;
+  font-optical-sizing: auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a { color: inherit; }
+p, li { text-wrap: pretty; }
+:focus-visible { outline: 2px solid currentColor; outline-offset: 3px; }
+
+.wrap {
+  width: 100%;
+  max-width: calc(var(--content) + 2 * var(--gutter));
+  margin-inline: auto;
+  padding-inline: var(--gutter);
+}
+
+/* Masthead */
+
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-top: 28px;
+  font-family: var(--display);
+  font-size: 15px;
+  line-height: 1.3;
+}
+.wordmark { font-weight: 600; letter-spacing: -0.005em; text-decoration: none; }
+.byline { color: var(--ink-2); }
+
+/* 1. The reader's problem: full-width type, nothing else */
+
+.problem {
+  padding-top: clamp(72px, 10vw, 148px);
+  padding-bottom: clamp(72px, 8.5vw, 124px);
+}
+.problem h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(2.75rem, 1.2rem + 6.2vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+.problem h1 .line { display: block; }
+
+.standfirst {
+  margin: clamp(28px, 3.4vw, 48px) 0 0;
+  max-width: 31em;
+  font-size: clamp(1.25rem, 1.05rem + 0.45vw, 1.5rem);
+  line-height: 1.42;
+}
+
+.button {
+  display: inline-block;
+  margin-top: clamp(28px, 3vw, 40px);
+  padding: 17px 26px 18px;
+  background: var(--ink);
+  color: var(--paper);
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 1;
+  text-decoration: none;
+  transition: background-color 0.15s ease;
+}
+.button:hover { background: #2C3830; }
+
+/* 2. The point of view, drawn: full-bleed ink band */
+
+.band { background: var(--band); color: var(--band-ink); }
+
+.pov {
+  padding-top: clamp(64px, 8vw, 120px);
+  padding-bottom: clamp(72px, 9vw, 136px);
+}
+.h2 {
+  margin: 0;
+  max-width: 17em;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(2rem, 1.1rem + 2.6vw, 3.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+
+.gap { margin: clamp(40px, 5vw, 72px) 0 0; }
+.gap svg { width: 100%; height: auto; overflow: visible; }
+.gap .gap__wide { display: block; }
+.gap .gap__tall { display: none; max-width: 420px; }
+.gap figcaption {
+  margin-top: 20px;
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--band-ink-2);
+}
+
+.pov__text {
+  margin: clamp(36px, 4vw, 56px) 0 0;
+  max-width: 34em;
+  font-size: clamp(1.2rem, 1.05rem + 0.35vw, 1.4rem);
+  line-height: 1.5;
+}
+
+/* The figure. Red marks the gap and nothing else. */
+
+.gap text { font-family: var(--display); font-variant-numeric: lining-nums tabular-nums; }
+.f-label { fill: var(--band-ink-2); font-size: 16px; font-weight: 500; }
+.f-seg { fill: rgba(228, 232, 224, 0.07); stroke: var(--band-ink-2); stroke-width: 1.25; }
+.f-name { fill: var(--band-ink); font-size: 16px; font-weight: 500; }
+.f-val { fill: var(--band-ink-2); font-size: 16px; font-weight: 400; }
+.f-total { fill: var(--band-ink); font-size: 32px; font-weight: 300; letter-spacing: -0.01em; }
+.f-store { fill: var(--band-ink); }
+.f-store-val { fill: var(--band); font-size: 32px; font-weight: 300; letter-spacing: -0.01em; }
+.f-guide { stroke: var(--band-ink-2); stroke-width: 1; stroke-dasharray: 2 5; }
+.f-dim { fill: none; stroke: var(--accent-on-band); stroke-width: 2; }
+.f-gap { fill: var(--accent-on-band); font-size: 26px; font-weight: 500; }
+.f-note { fill: var(--band-ink-2); font-size: 16px; font-weight: 400; }
+
+.gap__tall .f-label,
+.gap__tall .f-name,
+.gap__tall .f-val,
+.gap__tall .f-note { font-size: 14px; }
+.gap__tall .f-total { font-size: 26px; }
+.gap__tall .f-store-val { font-size: 22px; }
+.gap__tall .f-gap { font-size: 24px; }
+
+/* 3. Two named engagements: a numbered ledger, not cards */
+
+.offer {
+  padding-top: clamp(80px, 10vw, 152px);
+  padding-bottom: clamp(48px, 5vw, 72px);
+}
+.offers {
+  list-style: none;
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  padding: 0;
+  border-bottom: 1px solid var(--rule);
+}
+.offer-row {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 5fr) minmax(0, 2fr) minmax(0, 5fr);
+  column-gap: clamp(16px, 2.5vw, 40px);
+  align-items: baseline;
+  padding: 30px 0 38px;
+  border-top: 1px solid var(--rule);
+}
+.offer-row__num {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink-2);
+}
+.offer-row__name {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.5rem, 1.1rem + 1.2vw, 2.25rem);
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+.offer-row__terms {
+  margin: 0;
+  font-family: var(--display);
+  font-size: 15px;
+  line-height: 1.5;
+  color: var(--ink-2);
+}
+.offer-row__text { margin: 0; max-width: 32em; }
+.offer__gtm { margin: 26px 0 0; max-width: 44em; color: var(--ink-2); }
+
+/* 4. How the Diagnostic runs: a horizontal three-week strip */
+
+.weeks {
+  padding-top: clamp(64px, 7vw, 104px);
+  padding-bottom: clamp(88px, 10vw, 152px);
+}
+.weeks__list {
+  list-style: none;
+  margin: clamp(40px, 5vw, 64px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(20px, 3vw, 48px);
+}
+.weeks__list li { border-top: 2px solid var(--ink); padding-top: 18px; }
+.weeks__n {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  color: var(--ink-2);
+}
+.weeks__list h3,
+.hold h3 {
+  margin: 6px 0 12px;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: clamp(1.375rem, 1.1rem + 0.6vw, 1.75rem);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+.weeks__list p:not(.weeks__n) { margin: 0; }
+
+.hold {
+  margin-top: clamp(56px, 6vw, 88px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  column-gap: clamp(20px, 3vw, 48px);
+}
+.hold ul { grid-column: 2 / -1; }
+.hold h3 { margin: 12px 0 0; }
+.hold ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.hold li {
+  padding: 13px 0 14px;
+  border-bottom: 1px solid var(--rule);
+  font-size: clamp(1.25rem, 1.05rem + 0.45vw, 1.5rem);
+  line-height: 1.35;
+}
+
+/* 5 + 6. About, with the beauty story: a darker tint of the ground, a real photo */
+
+.about-band { background: var(--paper-2); }
+.about {
+  display: grid;
+  grid-template-columns: minmax(0, 3fr) minmax(0, 7fr) minmax(0, 2fr);
+  column-gap: clamp(24px, 4vw, 64px);
+  align-items: start;
+  padding-top: clamp(80px, 9vw, 136px);
+  padding-bottom: clamp(80px, 9vw, 136px);
+}
+.about__photo {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 30%;
+  background: var(--ink);
+}
+.about h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(1.75rem, 1.2rem + 1.4vw, 2.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.012em;
+}
+.about p { margin: 14px 0 0; max-width: 34em; }
+.about h2 + p { margin-top: 18px; }
+
+/* 7. The close: one oversized line, one first step, one button */
+
+.close {
+  padding-top: clamp(88px, 10vw, 160px);
+  padding-bottom: clamp(72px, 8vw, 120px);
+}
+.close h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 300;
+  font-size: clamp(2.75rem, 1.2rem + 6.2vw, 6.5rem);
+  line-height: 1;
+  letter-spacing: -0.022em;
+  text-wrap: balance;
+}
+.close__text {
+  margin: clamp(28px, 3.4vw, 48px) 0 0;
+  max-width: 31em;
+  font-size: clamp(1.25rem, 1.05rem + 0.45vw, 1.5rem);
+  line-height: 1.42;
+}
+.button--on-band { background: var(--band-ink); color: var(--band); }
+.button--on-band:hover { background: #FFFFFF; }
+.close__note {
+  margin: 14px 0 0;
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--band-ink-2);
+}
+
+.footer { padding-bottom: 40px; }
+.footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 32px;
+  padding-top: 22px;
+  border-top: 1px solid var(--band-rule);
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--band-ink-2);
+}
+.footer a { color: var(--band-ink-2); text-underline-offset: 3px; }
+.footer a:hover { color: var(--band-ink); }
+
+/* Below 1100px the wide figure gets too small to read; the tall one takes over */
+
+@media (max-width: 1099px) {
+  .gap .gap__wide { display: none; }
+  .gap .gap__tall { display: block; }
+}
+
+@media (min-width: 760px) and (max-width: 1099px) {
+  .pov .wrap {
+    display: grid;
+    grid-template-columns: minmax(0, 420px) minmax(0, 1fr);
+    column-gap: 56px;
+  }
+  .pov h2 { grid-column: 1 / -1; }
+  .gap { grid-column: 1; }
+  .pov__text { grid-column: 2; align-self: end; margin-top: 0; }
+}
+
+@media (max-width: 899px) {
+  .offer-row { grid-template-columns: 36px minmax(0, 1fr); row-gap: 10px; }
+  .offer-row__terms, .offer-row__text { grid-column: 2; }
+  .weeks__list { grid-template-columns: 1fr; row-gap: 36px; }
+  .hold { grid-template-columns: 1fr; }
+  .hold ul { grid-column: 1; }
+  .hold h3 { margin: 0 0 16px; }
+  .about { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
+}
+
+@media (max-width: 759px) {
+  .masthead { font-size: 14px; }
+  .about { grid-template-columns: 1fr; row-gap: 28px; }
+  .about__photo { max-width: 260px; }
+}
