@@ -330,9 +330,9 @@ p, li { text-wrap: pretty; }
 }
 .offer-row {
   display: grid;
-  grid-template-columns: 48px minmax(0, 5fr) minmax(0, 2fr) minmax(0, 5fr);
+  grid-template-columns: 48px minmax(0, 5fr) minmax(0, 6fr);
   column-gap: clamp(16px, 2.5vw, 40px);
-  align-items: baseline;
+  align-items: start;
   padding: 30px 0 38px;
   border-top: 1px solid var(--rule);
 }
@@ -352,8 +352,12 @@ p, li { text-wrap: pretty; }
   letter-spacing: -0.012em;
   text-wrap: balance;
 }
+/* The number, the name and the description share a top line; the terms sit under the name */
+.offer-row__head { min-width: 0; }
+.offer-row__terms span { white-space: nowrap; }
+.offer-row__num { padding-top: 0; }
 .offer-row__terms {
-  margin: 0;
+  margin: 10px 0 0;
   font-family: var(--display);
   font-size: 15px;
   line-height: 1.5;
@@ -503,7 +507,7 @@ p, li { text-wrap: pretty; }
   .pov__foot { grid-template-columns: 1fr; row-gap: 36px; }
   .scorecard { max-width: 360px; margin-top: 36px; }
   .offer-row { grid-template-columns: 36px minmax(0, 1fr); row-gap: 10px; }
-  .offer-row__terms, .offer-row__text { grid-column: 2; }
+  .offer-row__text { grid-column: 2; }
   .weeks__list { grid-template-columns: 1fr; row-gap: 36px; }
   .hold { grid-template-columns: 1fr; }
   .hold__text, .scorecard { grid-column: 1; }
