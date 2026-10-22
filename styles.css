@@ -61,7 +61,6 @@ p, li { text-wrap: pretty; }
   line-height: 1.3;
 }
 .wordmark { font-weight: 600; letter-spacing: -0.005em; text-decoration: none; }
-.byline { color: var(--ink-2); }
 
 /* 1. The reader's problem: full-width type, nothing else */
 
@@ -121,6 +120,7 @@ p, li { text-wrap: pretty; }
   text-wrap: balance;
 }
 
+.pov .h2 { max-width: 15em; font-size: clamp(2.25rem, 1.2rem + 3.3vw, 4.25rem); line-height: 1.02; letter-spacing: -0.02em; }
 .gap { margin: clamp(40px, 5vw, 72px) 0 0; }
 .gap svg { width: 100%; height: auto; overflow: visible; }
 .gap .gap__wide { display: block; }
@@ -146,21 +146,171 @@ p, li { text-wrap: pretty; }
 .f-seg { fill: rgba(228, 232, 224, 0.07); stroke: var(--band-ink-2); stroke-width: 1.25; }
 .f-name { fill: var(--band-ink); font-size: 16px; font-weight: 500; }
 .f-val { fill: var(--band-ink-2); font-size: 16px; font-weight: 400; }
-.f-total { fill: var(--band-ink); font-size: 32px; font-weight: 300; letter-spacing: -0.01em; }
+.f-total { fill: var(--band-ink); font-size: 48px; font-weight: 300; letter-spacing: -0.015em; }
 .f-store { fill: var(--band-ink); }
-.f-store-val { fill: var(--band); font-size: 32px; font-weight: 300; letter-spacing: -0.01em; }
+.f-store-val { fill: var(--band); font-size: 44px; font-weight: 300; letter-spacing: -0.015em; }
 .f-guide { stroke: var(--band-ink-2); stroke-width: 1; stroke-dasharray: 2 5; }
 .f-dim { fill: none; stroke: var(--accent-on-band); stroke-width: 2; }
-.f-gap { fill: var(--accent-on-band); font-size: 26px; font-weight: 500; }
+.f-gap { fill: var(--accent-on-band); font-size: 44px; font-weight: 500; letter-spacing: -0.01em; }
 .f-note { fill: var(--band-ink-2); font-size: 16px; font-weight: 400; }
 
 .gap__tall .f-label,
 .gap__tall .f-name,
 .gap__tall .f-val,
 .gap__tall .f-note { font-size: 14px; }
-.gap__tall .f-total { font-size: 26px; }
+.gap__tall .f-total { font-size: 30px; }
 .gap__tall .f-store-val { font-size: 22px; }
-.gap__tall .f-gap { font-size: 24px; }
+.gap__tall .f-gap { font-size: 28px; }
+
+/* The figure builds on scroll (script at the end of index.html). Without it, or with reduced motion, it simply shows. */
+.gap.is-animated .f-seg,
+.gap.is-animated .f-store {
+  transform-box: fill-box;
+  transform-origin: left center;
+  transform: scaleX(0);
+}
+.gap.is-animated .gap__tall .f-seg,
+.gap.is-animated .gap__tall .f-store { transform-origin: center bottom; transform: scaleY(0); }
+.gap.is-animated .f-lab,
+.gap.is-animated .f-reveal { opacity: 0; }
+/* Timing lives on the "in" state only, so arming hides instantly and only the build is staged */
+.gap.is-animated.is-in .f-seg,
+.gap.is-animated.is-in .f-store {
+  transform: none;
+  transition: transform 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0s);
+}
+.gap.is-animated.is-in .f-lab,
+.gap.is-animated.is-in .f-reveal {
+  opacity: 1;
+  transition: opacity 0.4s ease var(--d, 0s);
+}
+
+/* Supporting graphics: one sale counted three times (under the chart) and the weekly scorecard (beside what you hold) */
+
+/* Graphic 1 · one sale, three reports, beside the paragraph under the chart */
+.pov__foot {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  column-gap: clamp(32px, 5vw, 88px);
+  align-items: start;
+  margin-top: clamp(36px, 4vw, 56px);
+}
+.pov__foot .pov__text { margin-top: 0; }
+.one-sale { margin: 4px 0 0; font-family: var(--display); color: var(--band-ink); }
+.one-sale__path {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.one-sale__path::before {
+  content: "";
+  position: absolute;
+  top: 6px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 1px;
+  background: var(--band-ink-2);
+}
+.one-sale__path li {
+  position: relative;
+  padding: 24px 4px 0;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.3;
+  color: var(--band-ink-2);
+}
+.one-sale__path li::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 13px;
+  height: 13px;
+  margin-left: -6.5px;
+  border-radius: 50%;
+  background: var(--band);
+  border: 1.5px solid var(--band-ink-2);
+  box-sizing: border-box;
+}
+.one-sale__path .is-order { color: var(--band-ink); font-weight: 500; }
+.one-sale__path .is-order::before { background: var(--band-ink); border-color: var(--band-ink); }
+.one-sale__lead { margin: 26px 0 0; font-family: var(--display); font-size: 15px; color: var(--band-ink); }
+.one-sale__ledger {
+  width: 100%;
+  margin-top: 12px;
+  border-collapse: collapse;
+  font-size: 15px;
+  font-variant-numeric: lining-nums tabular-nums;
+  color: var(--band-ink-2);
+}
+.one-sale__ledger th {
+  padding: 0 0 6px;
+  font-size: 13px;
+  font-weight: 400;
+  text-align: left;
+  color: var(--band-ink-2);
+}
+.one-sale__ledger td { padding: 7px 0 8px; border-top: 1px solid var(--band-rule); vertical-align: baseline; }
+.one-sale__ledger th:not(:last-child),
+.one-sale__ledger td:not(:last-child) { padding-right: 12px; }
+.one-sale__ledger th:nth-child(2),
+.one-sale__ledger td:nth-child(2) { width: 30%; }
+.one-sale__ledger th:last-child,
+.one-sale__ledger td:last-child { width: 18%; text-align: right; }
+.one-sale__ledger .o { color: var(--band-ink); font-weight: 500; letter-spacing: 0.02em; }
+.one-sale__ledger .is-sum td { border-top-color: var(--band-ink-2); color: var(--band-ink); font-weight: 500; }
+.one-sale__ledger .is-store td { color: var(--band-ink); }
+.one-sale__ledger .is-gap td { color: var(--accent-on-band); font-weight: 500; }
+
+/* Graphic 3 · the weekly scorecard, beside what you hold */
+.hold__side h3 { margin: 12px 0 0; }
+.scorecard { margin: 28px 0 0; max-width: 340px; }
+.scorecard__sheet {
+  padding: 16px 18px 12px;
+  background: #F3F5F0;
+  border: 1px solid var(--rule);
+  font-family: var(--display);
+  font-size: 13px;
+  font-variant-numeric: lining-nums tabular-nums;
+}
+.scorecard__head {
+  display: flex;
+  justify-content: space-between;
+  margin: 0 0 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--ink);
+  font-weight: 600;
+  font-size: 13px;
+}
+.scorecard__head span:last-child { font-weight: 400; color: var(--ink-2); }
+.scorecard dl { margin: 0; }
+.scorecard dl > div {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  padding: 6px 0 7px;
+  border-bottom: 1px solid #DADFD6;
+}
+.scorecard dl > div:last-child { border-bottom: 0; }
+.scorecard dt { color: var(--ink-2); }
+.scorecard dd { margin: 0; color: var(--ink); font-weight: 500; }
+.scorecard dd span { margin-left: 6px; font-weight: 400; color: var(--ink-2); }
+.scorecard .is-bar { flex-wrap: wrap; }
+.scorecard .is-bar::after {
+  content: "";
+  flex: 0 0 var(--w);
+  height: 6px;
+  margin-top: 6px;
+  background: var(--ink);
+}
+.scorecard .is-claims::after { background: transparent; box-shadow: inset 0 0 0 1px var(--ink-2); }
+.scorecard .is-gap dt,
+.scorecard .is-gap dd { color: var(--accent); }
+.scorecard figcaption { margin-top: 10px; font-family: var(--display); font-size: 13px; color: var(--ink-2); }
 
 /* 3. Two named engagements: a numbered ledger, not cards */
 
@@ -311,12 +461,6 @@ p, li { text-wrap: pretty; }
 }
 .button--on-band { background: var(--band-ink); color: var(--band); }
 .button--on-band:hover { background: #FFFFFF; }
-.close__note {
-  margin: 14px 0 0;
-  font-family: var(--display);
-  font-size: 14px;
-  color: var(--band-ink-2);
-}
 
 .footer { padding-bottom: 40px; }
 .footer__inner {
@@ -347,10 +491,12 @@ p, li { text-wrap: pretty; }
   }
   .pov h2 { grid-column: 1 / -1; }
   .gap { grid-column: 1; }
-  .pov__text { grid-column: 2; align-self: end; margin-top: 0; }
+  .pov__foot { grid-column: 2; align-self: end; margin-top: 0; grid-template-columns: 1fr; row-gap: 32px; }
 }
 
 @media (max-width: 899px) {
+  .pov__foot { grid-template-columns: 1fr; row-gap: 36px; }
+  .scorecard { max-width: 360px; }
   .offer-row { grid-template-columns: 36px minmax(0, 1fr); row-gap: 10px; }
   .offer-row__terms, .offer-row__text { grid-column: 2; }
   .weeks__list { grid-template-columns: 1fr; row-gap: 36px; }
