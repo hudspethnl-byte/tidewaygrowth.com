@@ -125,6 +125,12 @@ p, li { text-wrap: pretty; }
 .gap svg { width: 100%; height: auto; overflow: visible; }
 .gap .gap__wide { display: block; }
 .gap .gap__tall { display: none; max-width: 420px; }
+.gap figcaption {
+  margin-top: 20px;
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--band-ink-2);
+}
 
 .pov__text {
   margin: clamp(36px, 4vw, 56px) 0 0;
