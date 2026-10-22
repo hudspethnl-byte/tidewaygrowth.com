@@ -125,12 +125,6 @@ p, li { text-wrap: pretty; }
 .gap svg { width: 100%; height: auto; overflow: visible; }
 .gap .gap__wide { display: block; }
 .gap .gap__tall { display: none; max-width: 420px; }
-.gap figcaption {
-  margin-top: 20px;
-  font-family: var(--display);
-  font-size: 14px;
-  color: var(--band-ink-2);
-}
 
 .pov__text {
   margin: clamp(36px, 4vw, 56px) 0 0;
@@ -192,11 +186,15 @@ p, li { text-wrap: pretty; }
   display: grid;
   grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
   column-gap: clamp(32px, 5vw, 88px);
-  align-items: start;
+  align-items: stretch;
   margin-top: clamp(36px, 4vw, 56px);
 }
 .pov__foot .pov__text { margin-top: 0; }
-.one-sale { margin: 4px 0 0; font-family: var(--display); color: var(--band-ink); }
+.pov__left { display: flex; flex-direction: column; }
+.pov__left .pov__text { margin-bottom: clamp(36px, 4vw, 52px); }
+.pov__left .one-sale__path { margin-top: auto; }
+.one-sale > .one-sale__lead:first-child { margin-top: 0; }
+.one-sale { margin: 6px 0 0; font-family: var(--display); color: var(--band-ink); }
 .one-sale__path {
   position: relative;
   display: grid;
@@ -204,6 +202,7 @@ p, li { text-wrap: pretty; }
   list-style: none;
   margin: 0;
   padding: 0;
+  font-family: var(--display);
 }
 .one-sale__path::before {
   content: "";
@@ -266,8 +265,7 @@ p, li { text-wrap: pretty; }
 .one-sale__ledger .is-gap td { color: var(--accent-on-band); font-weight: 500; }
 
 /* Graphic 3 · the weekly scorecard, beside what you hold */
-.hold__side h3 { margin: 12px 0 0; }
-.scorecard { margin: 28px 0 0; max-width: 340px; }
+.scorecard { grid-column: 3; margin: 0; }
 .scorecard__sheet {
   padding: 16px 18px 12px;
   background: #F3F5F0;
@@ -392,13 +390,14 @@ p, li { text-wrap: pretty; }
 .weeks__list p:not(.weeks__n) { margin: 0; }
 
 .hold {
-  margin-top: clamp(56px, 6vw, 88px);
+  margin-top: clamp(64px, 7vw, 104px);
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   column-gap: clamp(20px, 3vw, 48px);
+  align-items: center;
 }
-.hold ul { grid-column: 2 / -1; }
-.hold h3 { margin: 12px 0 0; }
+.hold__text { grid-column: 1 / span 2; }
+.hold h3 { margin: 0 0 18px; }
 .hold ul { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
 .hold li {
   padding: 13px 0 14px;
@@ -496,13 +495,12 @@ p, li { text-wrap: pretty; }
 
 @media (max-width: 899px) {
   .pov__foot { grid-template-columns: 1fr; row-gap: 36px; }
-  .scorecard { max-width: 360px; }
+  .scorecard { max-width: 360px; margin-top: 36px; }
   .offer-row { grid-template-columns: 36px minmax(0, 1fr); row-gap: 10px; }
   .offer-row__terms, .offer-row__text { grid-column: 2; }
   .weeks__list { grid-template-columns: 1fr; row-gap: 36px; }
   .hold { grid-template-columns: 1fr; }
-  .hold ul { grid-column: 1; }
-  .hold h3 { margin: 0 0 16px; }
+  .hold__text, .scorecard { grid-column: 1; }
   .about { grid-template-columns: minmax(0, 2fr) minmax(0, 3fr); }
 }
 
