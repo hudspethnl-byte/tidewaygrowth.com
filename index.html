@@ -27,7 +27,7 @@
   <section class="problem wrap" aria-labelledby="problem-title">
     <h1 id="problem-title"><span class="line">Every channel is winning.</span> <span class="line">The total isn't moving.</span></h1>
     <p class="standfirst">I help DTC brands figure out which numbers to trust and where the next dollar should go, especially when customers take a while to decide.</p>
-    <a class="button" href="#start">Set up a 30-minute call</a>
+    <a class="button" href="#start">Get in touch</a>
   </section>
 
   <section class="pov band" aria-labelledby="pov-title">
@@ -213,8 +213,50 @@
   <section class="close band" id="start" aria-labelledby="close-title">
     <div class="wrap">
       <h2 id="close-title">Want to see how far apart your numbers are?</h2>
-      <p class="close__text">Before we talk, pull two numbers for the last 90 days: what your platforms say they drove, added up, and what your store booked. We'll spend 30 minutes on the gap and where I'd start looking.</p>
-      <a class="button button--on-band" href="mailto:nelson@tideway.io?subject=30-minute%20call">Set up a 30-minute call</a>
+      <div class="contact">
+        <div class="contact__note">
+          <p class="close__text">Tell me a little about your business and what your reports are showing. If it looks like something I can help with, I'll get back to you and we can find a time to talk.</p>
+          <p class="contact__alt">Prefer email? <a href="mailto:nelson@tideway.io">nelson@tideway.io</a></p>
+        </div>
+        <form class="contact__form" action="https://formspree.io/f/mrppgwzo" method="POST" data-endpoint="https://formspree.io/f/mrppgwzo">
+          <input type="hidden" name="_subject" value="New inquiry from tidewaygrowth.com">
+          <div class="field">
+            <label for="c-name">Name</label>
+            <input id="c-name" name="name" type="text" autocomplete="name" required>
+          </div>
+          <div class="field">
+            <label for="c-email">Email</label>
+            <input id="c-email" name="email" type="email" autocomplete="email" required>
+          </div>
+          <div class="field">
+            <label for="c-site">Company website</label>
+            <input id="c-site" name="website" type="text" inputmode="url" autocomplete="url" placeholder="yourbrand.com">
+          </div>
+          <div class="field">
+            <label for="c-spend">Monthly ad spend (optional)</label>
+            <select id="c-spend" name="monthly_ad_spend">
+              <option value="">Choose one</option>
+              <option>Under $25K</option>
+              <option>$25K to $100K</option>
+              <option>$100K to $500K</option>
+              <option>Over $500K</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for="c-msg">What's going on?</label>
+            <textarea id="c-msg" name="message" rows="5" required placeholder="What your platforms say, what the store says, and what you'd like to sort out."></textarea>
+          </div>
+          <div class="field--hp" aria-hidden="true">
+            <label for="c-hp">Leave this empty</label>
+            <input id="c-hp" name="_gotcha" type="text" tabindex="-1" autocomplete="off">
+          </div>
+          <div class="contact__actions">
+            <button class="button button--on-band" type="submit">Send</button>
+            <p class="contact__status" role="status" aria-live="polite"></p>
+          </div>
+        </form>
+      </div>
     </div>
   </section>
 
@@ -273,6 +315,32 @@
   }, { threshold: 0.35 });
   arm.observe(fig);
   play.observe(fig);
+})();
+
+// The contact form posts to the form service in data-endpoint and answers inline.
+(() => {
+  const form = document.querySelector('.contact__form');
+  if (!form) return;
+  const status = form.querySelector('.contact__status');
+  const button = form.querySelector('button[type=submit]');
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (!form.reportValidity()) return;
+    const endpoint = form.dataset.endpoint;
+    if (!endpoint) { status.textContent = "Preview only: the form isn't connected yet."; return; }
+    button.disabled = true;
+    status.textContent = 'Sending...';
+    try {
+      const res = await fetch(endpoint, { method: 'POST', body: new FormData(form), headers: { Accept: 'application/json' } });
+      if (!res.ok) throw new Error(String(res.status));
+      form.reset();
+      status.textContent = "Thanks, got it. I'll get back to you soon.";
+    } catch (err) {
+      status.textContent = "That didn't go through. Email me at nelson@tideway.io instead.";
+    } finally {
+      button.disabled = false;
+    }
+  });
 })();
 </script>
 
